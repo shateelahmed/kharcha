@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: kharcha-backend
+    build:
+      context: ./
+      dockerfile: ./src/backend/Dockerfile
+      target: dev
+    environment:
+      NODE_ENV: dev
+      DEBUG: kharcha:*
+    volumes:
+      - ./src/backend:/src/backend
+    command: npm run dev
+
+  nginx:
+    container_name: kharcha-nginx
+    build:
+      context: ./
+      dockerfile: ./nginx/Dockerfile
+    volumes:
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
