@@ -1,10 +1,8 @@
 const express = require('express');
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./v1/routes/index');
-const usersRouter = require('./v1/routes/users');
+const v1ExpenseRouter = require('./v1/routes/expenseRoutes');
 
 const app = express();
 
@@ -12,9 +10,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'v1', 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+const v1RoutePrefix = '/api/v1';
+app.use(`${v1RoutePrefix}/expenses`, v1ExpenseRouter);
 
 module.exports = app;

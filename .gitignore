@@ -4,3 +4,4 @@
 **/.editorconfig
 **/.DS_Store
 **/.DS_Store
+**/db.json
